@@ -1,0 +1,12 @@
+{
+    "id": 2,
+    "title": "Coffee Conversations",
+    "excerpt": "Two friends discuss their lives and future plans over coffee every Friday.",
+    "image": "/api/placeholder/400/300",
+    "tags": {
+        "level": "beginner",
+        "grammar": ["present-perfect", "modals"],
+        "content": ["dialogue", "cultural"]
+    },
+    "content": "<p>\"I've been coming to this coffee shop for five years now,\" said Elena, stirring her latte slowly. \"Can you believe it?\"</p>\n\n<p>\"That must be why they always give you extra caramel,\" laughed Marco. \"I should start coming here more often!\"</p>\n\n<p>Elena and Marco had been meeting for coffee every Friday afternoon since university. Their weekly ritual had survived job changes, relationships, and even Marco's two-year stint working abroad.</p>\n\n<p>\"How has your new job been going?\" asked Elena. \"You've been there for three months now, right?\"</p>\n\n<p>\"It's been interesting. I've learned so much already, but I still feel like I have a lot to prove. My manager can be demanding, but she's taught me a lot.\"</p>\n\n<p>\"You should ask for that raise you mentioned last time,\" Elena suggested. \"You've been working late almost every day.\"</p>\n\n<p>\"Maybe you're right. I could talk to her next week.\"</p>\n\n<p>\"Definitely! Oh, I've been meaning to tell you—I've finally decided to take that painting class. It starts next Tuesday.\"</p>\n\n<p>\"That's great! You've wanted to do that for ages. You must be excited.\"</p>\n\n<p>\"I am, but also nervous. What if everyone else is really talented?\"</p>\n\n<p>\"You might be surprised by your own abilities,\" Marco encouraged. \"And anyway, everyone has to start somewhere.\"</p>\n\n<p>As they continued talking, the afternoon sun streamed through the window, bathing their corner table in warm light. Outside, the city rushed by, but in their coffee shop bubble, time always seemed to slow down.</p>\n\n<p>\"I've been thinking about taking a trip this summer,\" Elena said, changing the subject. \"I may go to Portugal.\"</p>\n\n<p>\"You should! We could check flights tonight if you want. I might even join you for part of it.\"</p>\n\n<p>And so another Friday coffee unfolded, weaving together the small and large threads of their lives, one conversation at a time.</p>"
+}

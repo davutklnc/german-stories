@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Stories</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #618b4a;
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+            --gray-color: #e9e9e9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 0;
+        }
+        
+        .filters {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .filter-tag {
+            padding: 0.3rem 0.7rem;
+            background-color: var(--gray-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tag:hover {
+            background-color: #d8d8d8;
+        }
+        
+        .filter-tag.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .clear-filters {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .clear-filters:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .story-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .story-image {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+            background-color: var(--gray-color);
+        }
+        
+        .story-content {
+            padding: 1.2rem;
+        }
+        
+        .story-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .story-excerpt {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .story-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        
+        .story-tag {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background-color: var(--gray-color);
+            border-radius: 20px;
+        }
+        
+        .story-tag.level {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .story-tag.grammar {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .story-tag.content {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+
+        #story-detail {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        #story-detail-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        #story-detail-title {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        #story-detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        #story-detail-content {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 3rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .no-results h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .stories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Language Stories</h1>
+        <p>Improve your language skills through engaging stories</p>
+    </header>
+    
+    <div class="container">
+        <section id="home-view">
+            <div class="filters">
+                <div class="filter-group">
+                    <span class="filter-title">Language Level:</span>
+                    <div class="filter-options" id="level-filters">
+                        <div class="filter-tag" data-filter="level" data-value="beginner">Beginner</div>
+                        <div class="filter-tag" data-filter="level" data-value="intermediate">Intermediate</div>
+                        <div class="filter-tag" data-filter="level" data-value="advanced">Advanced</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <span class="filter-title">Grammar Topics:</span>
+                    <div class="filter-options" id="grammar-filters">
+                        <div class="filter-tag" data-filter="grammar" data-value="past-tense">Past Tense</div>
+                        <div class="filter-tag" data-filter="grammar" data-value="present-perfect">Present Perfect</div>
+                        <div class="filter-tag" data-filter="grammar" data-value="conditionals">Conditionals</div>
+                        <div class="filter-tag" data-filter="grammar" data-value="passive-voice">Passive Voice</div>
+                        <div class="filter-tag" data-filter="grammar" data-value="modals">Modals</div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <span class="filter-title">Content Type:</span>
+                    <div class="filter-options" id="content-filters">
+                        <div class="filter-tag" data-filter="content" data-value="adventure">Adventure</div>
+                        <div class="filter-tag" data-filter="content" data-value="historical">Historical</div>
+                        <div class="filter-tag" data-filter="content" data-value="dialogue">Dialogue</div>
+                        <div class="filter-tag" data-filter="content" data-value="mystery">Mystery</div>
+                        <div class="filter-tag" data-filter="content" data-value="cultural">Cultural</div>
+                    </div>
+                </div>
+                
+                <button class="clear-filters" id="clear-filters">Clear All Filters</button>
+            </div>
+            
+            <div class="stories-grid" id="stories-grid">
+                <!-- Stories will be loaded dynamically -->
+            </div>
+        </section>
+        
+        <section id="story-detail">
+            <img id="story-detail-image" src="/api/placeholder/800/400" alt="Story cover">
+            <h2 id="story-detail-title">Story Title</h2>
+            <div id="story-detail-tags">
+                <!-- Tags will be loaded dynamically -->
+            </div>
+            <div id="story-detail-content">
+                <!-- Story content will be loaded here -->
+            </div>
+            <a class="back-button" id="back-to-home">Back to Stories</a>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Language Stories. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Stories will be loaded from JSON files
+        let stories = [];
+        
+        // Function to load stories from JSON files
+        async function loadAllStories() {
+            try {
+                // Get a list of all story files (1-6)
+                const storyPromises = [];
+                for (let i = 1; i <= 6; i++) {
+                    storyPromises.push(fetch(`stories/story${i}.json`).then(response => response.json()));
+                }
+                
+                // Wait for all stories to load
+                stories = await Promise.all(storyPromises);
+                return stories;
+            } catch (error) {
+                console.error('Error loading stories:', error);
+                return [];
+            }
+        }
+        
+        // Initialize the application with async loading
+        document.addEventListener('DOMContentLoaded', async function() {
+            const storiesGrid = document.getElementById('stories-grid');
+            const homeView = document.getElementById('home-view');
+            const storyDetailView = document.getElementById('story-detail');
+            const backToHomeButton = document.getElementById('back-to-home');
+            const clearFiltersButton = document.getElementById('clear-filters');
+            
+            // Load all stories before initializing the UI
+            await loadAllStories();
+            
+            let activeFilters = {
+                level: [],
+                grammar: [],
+                content: []
+            };
+            
+            // Function to render all stories
+            function renderStories(filteredStories = stories) {
+                storiesGrid.innerHTML = '';
+                
+                if (filteredStories.length === 0) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.innerHTML = `
+                        <h3>No stories match your filters</h3>
+                        <p>Try selecting different filter options or clear all filters</p>
+                    `;
+                    storiesGrid.appendChild(noResults);
+                    return;
+                }
+                
+                filteredStories.forEach(story => {
+                    const storyCard = document.createElement('div');
+                    storyCard.className = 'story-card';
+                    storyCard.setAttribute('data-id', story.id);
+                    
+                    let tagsHTML = '';
+                    if (story.tags.level) {
+                        tagsHTML += `<span class="story-tag level">${story.tags.level}</span>`;
+                    }
+                    
+                    story.tags.grammar.forEach(tag => {
+                        tagsHTML += `<span class="story-tag grammar">${tag}</span>`;
+                    });
+                    
+                    story.tags.content.forEach(tag => {
+                        tagsHTML += `<span class="story-tag content">${tag}</span>`;
+                    });
+                    
+                    storyCard.innerHTML = `
+                        <img class="story-image" src="${story.image}" alt="${story.title}">
+                        <div class="story-content">
+                            <h3 class="story-title">${story.title}</h3>
+                            <p class="story-excerpt">${story.excerpt}</p>
+                            <div class="story-tags">
+                                ${tagsHTML}
+                            </div>
+                        </div>
+                    `;
+                    
+                    storyCard.addEventListener('click', () => {
+                        showStoryDetail(story.id);
+                    });
+                    
+                    storiesGrid.appendChild(storyCard);
+                });
+            }
+            
+            // Function to display a specific story
+            function showStoryDetail(storyId) {
+                const story = stories.find(s => s.id === storyId);
+                if (!story) return;
+                
+                document.getElementById('story-detail-image').src = story.image;
+                document.getElementById('story-detail-image').alt = story.title;
+                document.getElementById('story-detail-title').textContent = story.title;
+                
+                const detailTags = document.getElementById('story-detail-tags');
+                detailTags.innerHTML = '';
+                
+                // Add level tag
+                const levelTag = document.createElement('span');
+                levelTag.className = 'story-tag level';
+                levelTag.textContent = story.tags.level;
+                detailTags.appendChild(levelTag);
+                
+                // Add grammar tags
+                story.tags.grammar.forEach(tag => {
+                    const grammarTag = document.createElement('span');
+                    grammarTag.className = 'story-tag grammar';
+                    grammarTag.textContent = tag;
+                    detailTags.appendChild(grammarTag);
+                });
+                
+                // Add content tags
+                story.tags.content.forEach(tag => {
+                    const contentTag = document.createElement('span');
+                    contentTag.className = 'story-tag content';
+                    contentTag.textContent = tag;
+                    detailTags.appendChild(contentTag);
+                });
+                
+                document.getElementById('story-detail-content').innerHTML = story.content;
+                
+                homeView.style.display = 'none';
+                storyDetailView.style.display = 'block';
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+            
+            // Function to apply filters
+            function applyFilters() {
+                const filteredStories = stories.filter(story => {
+                    // Check level filter
+                    if (activeFilters.level.length > 0 && !activeFilters.level.includes(story.tags.level)) {
+                        return false;
+                    }
+                    
+                    // Check grammar filters
+                    if (activeFilters.grammar.length > 0) {
+                        const hasMatchingGrammar = story.tags.grammar.some(tag => 
+                            activeFilters.grammar.includes(tag)
+                        );
+                        if (!hasMatchingGrammar) return false;
+                    }
+                    
+                    // Check content filters
+                    if (activeFilters.content.length > 0) {
+                        const hasMatchingContent = story.tags.content.some(tag => 
+                            activeFilters.content.includes(tag)
+                        );
+                        if (!hasMatchingContent) return false;
+                    }
+                    
+                    return true;
+                });
+                
+                renderStories(filteredStories);
+            }
+            
+            // Filter tag click handler
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const filterType = this.getAttribute('data-filter');
+                    const filterValue = this.getAttribute('data-value');
+                    
+                    // Toggle the active state
+                    this.classList.toggle('active');
+                    
+                    // Update the active filters
+                    if (this.classList.contains('active')) {
+                        activeFilters[filterType].push(filterValue);
+                    } else {
+                        activeFilters[filterType] = activeFilters[filterType].filter(val => val !== filterValue);
+                    }
+                    
+                    applyFilters();
+                });
+            });
+            
+            // Clear filters button
+            clearFiltersButton.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tag').forEach(tag => {
+                    tag.classList.remove('active');
+                });
+                
+                activeFilters = {
+                    level: [],
+                    grammar: [],
+                    content: []
+                };
+                
+                renderStories();
+            });
+            
+            // Back to home button
+            backToHomeButton.addEventListener('click', function() {
+                homeView.style.display = 'block';
+                storyDetailView.style.display = 'none';
+            });
+            
+            // Initial render
+            renderStories();
+        });
+    </script>
+</body>
+</html>
